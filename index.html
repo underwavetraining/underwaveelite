@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Método Underwave por dentro · Underwave Training</title>
+<style>
+  :root{
+    --navy-d:#111F40;
+    --navy:#1C345E;
+    --yellow:#F4C616;
+    --light-blue:#EEF3FA;
+    --paper:#FFFFFF;
+    --ink:#20242E;
+    --muted:#6B7488;
+    --line:#E4E8EF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:#F4F6F9;font-family:Arial,Helvetica,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:760px;margin:0 auto;background:var(--paper);}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--navy-d);color:#fff;padding:60px 38px 46px;text-align:center;}
+  .brand{color:var(--yellow);font-weight:bold;font-size:13px;letter-spacing:2.5px;margin-bottom:22px;}
+  .hero h1{font-size:36px;line-height:1.08;letter-spacing:.3px;margin-bottom:16px;}
+  .hero h1 .y{color:var(--yellow);}
+  .hero .lead{color:#D7DEEA;font-size:16.5px;line-height:1.55;max-width:560px;margin:0 auto 18px;}
+  .dryline{display:inline-block;background:rgba(244,198,22,.12);border:1px solid rgba(244,198,22,.35);
+           color:#F4C616;font-size:13.5px;font-weight:bold;padding:9px 18px;border-radius:8px;margin:0 auto 26px;}
+  .proof{display:flex;justify-content:center;gap:0;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.15);padding-top:24px;margin-top:8px;}
+  .proof .item{padding:0 22px;border-right:1px solid rgba(255,255,255,.15);}
+  .proof .item:last-child{border-right:none;}
+  .proof .n{color:var(--yellow);font-size:26px;font-weight:bold;line-height:1;}
+  .proof .l{color:#AEB8CC;font-size:12px;letter-spacing:.5px;margin-top:5px;text-transform:uppercase;}
+
+  /* ---------- SECTION SKELETON ---------- */
+  section{padding:46px 38px;border-bottom:1px solid var(--line);}
+  .eyebrow{display:inline-block;background:var(--light-blue);color:var(--navy);font-weight:bold;
+           font-size:11.5px;letter-spacing:1.5px;padding:6px 12px;border-radius:5px;margin-bottom:16px;text-transform:uppercase;}
+  .step-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .step-tag .badge{background:var(--yellow);color:var(--navy-d);font-weight:bold;font-size:12px;
+                   letter-spacing:1px;padding:6px 12px;border-radius:5px;}
+  .step-tag .lbl{color:var(--muted);font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:bold;}
+  h2{font-size:27px;line-height:1.15;color:var(--navy-d);margin-bottom:14px;letter-spacing:.2px;}
+  h2 .y{color:#BA9410;}
+  p{font-size:16px;color:#2E3440;margin-bottom:14px;}
+  p.big{font-size:17.5px;}
+  strong{color:var(--navy-d);}
+  .muted-line{color:var(--muted);font-size:14.5px;}
+
+  /* ---------- PROBLEM CARDS ---------- */
+  .pcards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+  .pcard{background:var(--light-blue);border-radius:10px;padding:18px 18px;}
+  .pcard h4{color:var(--navy-d);font-size:15.5px;margin-bottom:6px;}
+  .pcard p{font-size:13.5px;color:#46506A;margin:0;line-height:1.5;}
+
+  /* ---------- FORM SHOWCASE ---------- */
+  .formbox{background:var(--navy-d);border-radius:12px;padding:8px 8px 14px;margin-top:18px;}
+  .formbox .ftop{color:#fff;padding:14px 18px 12px;}
+  .formbox .ftop .ft{color:var(--yellow);font-weight:bold;font-size:13px;letter-spacing:1px;}
+  .formbox .ftop .fs{color:#AEB8CC;font-size:12.5px;margin-top:3px;}
+  .qrow{background:#fff;border-radius:8px;margin:6px 6px 0;padding:11px 15px;display:flex;gap:12px;align-items:flex-start;}
+  .qrow .qn{flex:0 0 24px;width:24px;height:24px;background:var(--light-blue);color:var(--navy);
+            border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;margin-top:1px;}
+  .qrow .qt{font-size:13.5px;color:var(--ink);line-height:1.4;}
+  .qmore{text-align:center;color:#AEB8CC;font-size:12.5px;padding:12px 0 4px;letter-spacing:.5px;}
+
+  /* ---------- ORDERED FLOW ---------- */
+  .flow{margin-top:6px;}
+  .flow .f{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+  .flow .f:last-child{border-bottom:none;}
+  .flow .fn{flex:0 0 34px;width:34px;height:34px;background:var(--navy-d);color:var(--yellow);border-radius:50%;
+            display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:15px;}
+  .flow .fc h4{color:var(--navy-d);font-size:16px;margin-bottom:3px;}
+  .flow .fc p{font-size:14.5px;color:#46506A;margin:0;}
+
+  /* ---------- 8 TESTS GRID ---------- */
+  .tests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+  .test{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:13px 15px;}
+  .test .tnum{color:var(--yellow);font-weight:bold;font-size:11px;letter-spacing:1px;background:var(--navy-d);
+              display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:7px;}
+  .test h4{color:var(--navy-d);font-size:14.5px;margin-bottom:3px;line-height:1.25;}
+  .test p{font-size:12.5px;color:#5A6party;color:#5A647D;margin:0;line-height:1.45;}
+  .iceberg{background:var(--light-blue);border-left:5px solid var(--yellow);padding:14px 18px;border-radius:0 8px 8px 0;margin-top:18px;font-size:14.5px;color:var(--navy);}
+  .iceberg b{color:var(--navy-d);}
+
+  /* ---------- PROTOCOLS ---------- */
+  .protos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+  .proto{background:var(--navy-d);color:#fff;border-radius:9px;padding:15px 16px;}
+  .proto .pn{color:var(--yellow);font-weight:bold;font-size:15px;margin-bottom:4px;}
+  .proto .pd{color:#C3CCDD;font-size:13px;line-height:1.45;}
+
+  /* ---------- 1:1 ---------- */
+  .accomp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;}
+  .acard{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:#fff;}
+  .acard .ah{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+  .acard .ah .dot{width:10px;height:10px;border-radius:50%;background:var(--yellow);flex:0 0 10px;}
+  .acard h4{color:var(--navy-d);font-size:15px;}
+  .acard p{font-size:13.5px;color:#46506A;margin:0;line-height:1.5;}
+
+  /* ---------- CASES ---------- */
+  .case{padding:20px 22px;border:1px solid var(--line);border-left:4px solid var(--yellow);
+        border-radius:10px;margin-bottom:14px;background:#fff;}
+  .case .quote{font-size:15.5px;color:#2E3440;font-style:italic;line-height:1.55;margin-bottom:12px;}
+  .case .meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .case .who{font-weight:bold;color:var(--navy-d);font-size:15px;}
+  .case .role{color:var(--muted);font-size:13px;}
+  .case .result{display:inline-block;background:#EAF6EF;color:#1A7A4F;font-weight:bold;font-size:12.5px;
+                padding:5px 11px;border-radius:5px;}
+  .case .sep{color:var(--line);}
+
+  .coachnote{background:var(--navy-d);color:#fff;border-radius:12px;padding:22px 24px;margin-top:24px;}
+  .coachnote .cn-t{color:var(--yellow);font-weight:bold;font-size:14px;letter-spacing:1px;margin-bottom:8px;}
+  .coachnote p{color:#D7DEEA;font-size:14.5px;margin:0;line-height:1.55;}
+
+  /* ---------- CTA ---------- */
+  .cta{background:var(--navy-d);color:#fff;text-align:center;padding:50px 38px;}
+  .cta h2{color:#fff;font-size:28px;margin-bottom:14px;}
+  .cta h2 .y{color:var(--yellow);}
+  .cta p{color:#D7DEEA;font-size:16px;max-width:520px;margin:0 auto 12px;}
+  .cta .dual{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:560px;margin:26px auto 0;text-align:left;}
+  .cta .dual .d{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:18px 18px;}
+  .cta .dual .d .dt{color:var(--yellow);font-weight:bold;font-size:13px;letter-spacing:.5px;margin-bottom:6px;}
+  .cta .dual .d p{color:#C3CCDD;font-size:13.5px;margin:0 0 12px;}
+  .cta .kw{display:inline-block;background:var(--yellow);color:var(--navy-d);font-weight:bold;
+           font-size:14px;letter-spacing:1.5px;padding:9px 18px;border-radius:7px;}
+  .cta .ctabtn{display:inline-block;background:var(--yellow);color:var(--navy-d);font-weight:bold;
+           font-size:14.5px;letter-spacing:.3px;padding:12px 20px;border-radius:8px;text-decoration:none;
+           transition:transform .1s;width:100%;text-align:center;}
+  .cta .ctabtn:active{transform:scale(.98);}
+  .cta .small{color:#8A93A6;font-size:12.5px;margin-top:30px;letter-spacing:.4px;}
+
+  .footer{background:#0C1730;text-align:center;color:#8A93A6;font-size:12px;padding:24px 38px;letter-spacing:.5px;}
+
+  sub{font-size:.72em;vertical-align:-.2em;}
+
+  @media (max-width:620px){
+    .hero{padding:46px 24px 38px;}
+    .hero h1{font-size:29px;}
+    section{padding:38px 24px;}
+    .pcards,.tests,.protos,.accomp,.cta .dual{grid-template-columns:1fr;}
+    .proof .item{padding:8px 16px;}
+    .case .photo{flex:0 0 72px;width:72px;height:72px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== HERO ===================== -->
+  <div class="hero">
+    <div class="brand">UNDERWAVE TRAINING®</div>
+    <h1>El método <span class="y">por dentro</span></h1>
+    <p class="lead">No te voy a mostrar la punta del iceberg y dejarte adivinando. Te voy a mostrar exactamente qué pasa cuando entrás a entrenar conmigo — paso a paso, cómo trabajo con cada alumno y cómo se ven los resultados reales.</p>
+    <div class="dryline">✓ Se entrena 100% en seco. No necesitás acceso al agua — la piscina suma, pero no es obligatoria.</div>
+    <div class="proof">
+      <div class="item"><div class="n">2.600+</div><div class="l">Alumnos</div></div>
+      <div class="item"><div class="n">500+</div><div class="l">Reviews 5★</div></div>
+      <div class="item"><div class="n">10+</div><div class="l">Años enseñando</div></div>
+    </div>
+  </div>
+
+  <!-- ===================== PROBLEMA ===================== -->
+  <section>
+    <span class="eyebrow">Por qué existe esto</span>
+    <h2>Lo que de verdad te limita en el agua <span class="y">no es la técnica.</span></h2>
+    <p class="big">Después de más de diez años entrenando surfistas, freedivers y deportistas de agua, lo veo siempre igual: el techo no está en cómo remás ni en cómo te parás en la tabla. Está en tu respiración y en tu cabeza bajo presión.</p>
+    <p>Nadie te enseñó a respirar para el agua. Ni el surf, ni la natación, ni el breathwork de colchoneta. Y mientras eso siga sin entrenar, tu progresión se queda estancada — no importa tu nivel.</p>
+    <div class="pcards">
+      <div class="pcard"><h4>Pánico en wipeouts</h4><p>El revolcón te gana antes de que el cuerpo llegue a su límite real. La respiración se vuelve caótica y la mente se dispara.</p></div>
+      <div class="pcard"><h4>Fatiga y mala recuperación</h4><p>Respiración ineficiente: menos oxígeno, más fatiga, y nunca terminás de recuperar entre olas.</p></div>
+      <div class="pcard"><h4>Ansiedad bajo presión</h4><p>Una mente sin entrenar duda, se traba, y convierte cada día grande en una batalla de estrés.</p></div>
+      <div class="pcard"><h4>Surfear en modo supervivencia</h4><p>Dudás en olas que sabés que podés. Cortás sesiones. Te estancás meses o años. No es técnica — es respiración y mente.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PASO 1 — DIAGNÓSTICO ===================== -->
+  <section>
+    <div class="step-tag"><span class="badge">PASO 1</span><span class="lbl">El diagnóstico</span></div>
+    <h2>Antes de darte un solo ejercicio, necesito entenderte.</h2>
+    <p>Lo primero que hago cuando entrás no es ponerte a entrenar. Es entender quién sos, de dónde venís y qué te frena. Por eso lo primero que recibís es un formulario de diagnóstico con preguntas estratégicas — y de tus respuestas sale el diseño de todo tu plan.</p>
+    <p class="muted-line">Esto es de verdad lo primero que vas a recibir. Mirá:</p>
+
+    <div class="formbox">
+      <div class="ftop">
+        <div class="ft">DIAGNÓSTICO INICIAL — PROGRAMA UNDERWAVE</div>
+        <div class="fs">Mientras más detallado seas, mejor el plan. No hay respuestas correctas.</div>
+      </div>
+      <div class="qrow"><div class="qn">1</div><div class="qt">¿Hace cuánto practicás y con qué frecuencia entrenás actualmente?</div></div>
+      <div class="qrow"><div class="qn">2</div><div class="qt">¿Cuál es tu mejor tiempo de apnea aproximado? (aunque sea una estimación)</div></div>
+      <div class="qrow"><div class="qn">3</div><div class="qt">Describí la situación en el agua donde más sentís que la respiración te limita.</div></div>
+      <div class="qrow"><div class="qn">4</div><div class="qt">¿Qué te genera más dificultad a nivel mental o emocional en el agua? (pánico, ansiedad, bloqueo)</div></div>
+      <div class="qrow"><div class="qn">5</div><div class="qt">¿Cuál es tu objetivo concreto? ¿Qué situación querés que sea diferente al final?</div></div>
+      <div class="qmore">+ varias preguntas más para entender en profundidad tu historia con el agua y cómo este plan se adapta exactamente a vos</div>
+    </div>
+    <p style="margin-top:18px;">Esto no es un trámite. Es lo que me permite no darte una rutina genérica, sino un plan que ataca <strong>tu</strong> cuello de botella real.</p>
+  </section>
+
+  <!-- ===================== PASO 2 — VIVÍS EL MÉTODO ===================== -->
+  <section>
+    <div class="step-tag"><span class="badge">PASO 2</span><span class="lbl">Vivís el método</span></div>
+    <h2>Primero aprendés. <span class="y">Después medís.</span></h2>
+    <p>Mucha gente quiere medirse el día uno. Yo lo hago al revés a propósito. Antes de tirarte números, quiero que entiendas qué estás haciendo y por qué — porque hay cosas técnicas que cambian por completo cómo te medís y cómo entrenás.</p>
+    <div class="flow">
+      <div class="f"><div class="fn">1</div><div class="fc"><h4>Mirás el Nivel 1 completo</h4><p>Fisiología respiratoria, mecánica, los fundamentos del control mental. La base sobre la que se construye todo.</p></div></div>
+      <div class="f"><div class="fn">2</div><div class="fc"><h4>Empezás tu rutina respiratoria</h4><p>Apenas terminás el Nivel 1 ya te puedo dar una rutina funcional para empezar a entrenar en seco.</p></div></div>
+      <div class="f"><div class="fn">3</div><div class="fc"><h4>Recién ahí: las mediciones</h4><p>Con la técnica entendida, los tests te dan información real — no un número que no sabés interpretar.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== PASO 3 — LOS 8 TESTS ===================== -->
+  <section>
+    <div class="step-tag"><span class="badge">PASO 3</span><span class="lbl">El diagnóstico físico</span></div>
+    <h2>El Performance Evaluation Protocol™ — 8 tests, no un número.</h2>
+    <p>Acá está la diferencia entre un consejo suelto y un sistema. No me ancla un solo dato — evalúo 8 dimensiones distintas de tu respiración y tu fisiología, y el patrón que emerge entre los 8 me dice exactamente dónde está tu cuello de botella.</p>
+    <div class="tests">
+      <div class="test"><span class="tnum">TEST 01</span><h4>BOLT</h4><p>Tolerancia al CO₂ en reposo. Tu línea de base.</p></div>
+      <div class="test"><span class="tnum">TEST 02</span><h4>Apnea VR — pulmón vacío</h4><p>Tu control en la condición más exigente posible.</p></div>
+      <div class="test"><span class="tnum">TEST 03</span><h4>Apnea estática — pulmón lleno</h4><p>Capacidad de relajación y calma bajo confort.</p></div>
+      <div class="test"><span class="tnum">TEST 04</span><h4>100m crol</h4><p>Tu base aeróbica y eficiencia técnica de nado.</p></div>
+      <div class="test"><span class="tnum">TEST 05</span><h4>CO₂ Swimming escalonado</h4><p>Control respiratorio bajo fatiga progresiva.</p></div>
+      <div class="test"><span class="tnum">TEST 06</span><h4>Under-Overs 200m</h4><p>Apnea dinámica con demanda aeróbica sostenida.</p></div>
+      <div class="test"><span class="tnum">TEST 07</span><h4>Tablas Dinámicas</h4><p>Recuperación entre apneas consecutivas.</p></div>
+      <div class="test"><span class="tnum">TEST 08</span><h4>Recuperación post-esfuerzo</h4><p>Qué tan rápido tu cuerpo vuelve a la calma.</p></div>
+    </div>
+    <div class="iceberg"><b>Por qué importa:</b> un número aislado dice poco. El surfista que aguanta 4 minutos quieto pero se rompe bajo un set de 6 olas tiene un problema que ningún test individual detecta. El patrón entre los 8 es lo que diseña tu programa.</div>
+  </section>
+
+  <!-- ===================== PASO 4 — UNA RESPUESTA PARA CADA MOMENTO ===================== -->
+  <section>
+    <div class="step-tag"><span class="badge">PASO 4</span><span class="lbl">Una respuesta para cada momento</span></div>
+    <h2>Vas a saber exactamente qué hacer <span class="y">en cada situación.</span></h2>
+    <p>El breathwork de colchoneta te da una sola respiración para todo. El agua no funciona así. Lo que entrenás conmigo es saber qué hacer con tu respiración en cada momento real — antes de entrar, entre olas, en el revolcón, cuando el cuerpo se te dispara. No una técnica genérica: la respuesta justa para lo que está pasando.</p>
+    <div class="protos">
+      <div class="proto"><div class="pn">Antes de entrar</div><div class="pd">Cómo prepararte y activarte sin caer en la hiperventilación que te juega en contra.</div></div>
+      <div class="proto"><div class="pn">Entre olas</div><div class="pd">Recuperar el aire rápido para que cada ola no te encuentre más cansado que la anterior.</div></div>
+      <div class="proto"><div class="pn">En el revolcón</div><div class="pd">Qué hacer en los segundos críticos de un wipeout y un hold-down para salir en control.</div></div>
+      <div class="proto"><div class="pn">Cuando te activás</div><div class="pd">Volver a la calma cuando el cuerpo entra en alerta y la cabeza se acelera.</div></div>
+      <div class="proto"><div class="pn">En la zona de impacto</div><div class="pd">Cómo respirar en el punto de mayor exigencia, donde la mayoría pierde el control.</div></div>
+      <div class="proto"><div class="pn">Para recuperar</div><div class="pd">Hasta el sueño y el descanso entran — porque también son parte de cómo respirás.</div></div>
+    </div>
+    <div class="iceberg"><b>Esto es lo que cambia todo:</b> dejás de improvisar bajo el agua. Cada situación tiene una respuesta entrenada, y tu cuerpo la ejecuta sin que la cabeza tenga que pensarla.</div>
+  </section>
+
+  <!-- ===================== PASO 5 — ACOMPAÑAMIENTO ===================== -->
+  <section>
+    <div class="step-tag"><span class="badge">PASO 5</span><span class="lbl">El acompañamiento</span></div>
+    <h2>No te dejo solo con un curso. Te acompaño yo.</h2>
+    <p>La diferencia entre comprar un curso y entrenar con un método es el acompañamiento. En el plan ELITE no entrenás contra una pantalla — entrenás conmigo, con seguimiento real en cada etapa.</p>
+    <div class="accomp">
+      <div class="acard"><div class="ah"><span class="dot"></span><h4>Plan personalizado de 8 semanas</h4></div><p>Diseñado por mí a partir de tu diagnóstico y tus 8 tests. No es una plantilla — es tuyo.</p></div>
+      <div class="acard"><div class="ah"><span class="dot"></span><h4>Dos llamadas 1:1 conmigo</h4></div><p>Una de diagnóstico inicial y otra de objetivos y progresión. Cara a cara, no con un asistente.</p></div>
+      <div class="acard"><div class="ah"><span class="dot"></span><h4>Seguimiento durante todo el plan</h4></div><p>Ajustamos sobre la marcha según cómo respondés. El programa evoluciona con vos.</p></div>
+      <div class="acard"><div class="ah"><span class="dot"></span><h4>Soporte prioritario</h4></div><p>Cuando aparece la duda o el bloqueo, no esperás. Estoy del otro lado.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CASOS ===================== -->
+  <section>
+    <span class="eyebrow">La prueba</span>
+    <h2>Surfistas reales. Transformaciones reales.</h2>
+    <p>No te pido que me creas. Te muestro lo que pasó con gente que entrenó el método — con nombre, deporte y resultado.</p>
+
+    <div class="case">
+      <div class="quote">"Underwave cambió todo para mí: de menos de 2 minutos de apnea a más de 4, más un nado de 50m bajo el agua y control total en situaciones críticas. Como surfista profesional y coach, ahora uso estas técnicas con mis atletas."</div>
+      <div class="meta">
+        <span class="who">Vicente Díaz</span><span class="sep">·</span>
+        <span class="role">Surfista Profesional (Chile)</span>
+        <span class="result">&lt;2 min → +4 min · 50m DNF</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="quote">"No podía aguantar la respiración más de 40 segundos sin entrar en pánico. Después del Nivel 1 y 2, llegué a 3:30 en solo tres semanas."</div>
+      <div class="meta">
+        <span class="who">Juan Villalobos</span><span class="sep">·</span>
+        <span class="role">Surfer</span>
+        <span class="result">40 seg → 3:30 en 3 semanas</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="quote">"Acabo de llegar a 3:10 de apnea — algo que nunca creí posible. Me ponía ansioso al minuto. Entender las fases del breath-hold lo cambió todo."</div>
+      <div class="meta">
+        <span class="who">Gonza</span><span class="sep">·</span>
+        <span class="role">Surf Coach</span>
+        <span class="result">Se trababa al minuto → 3:10</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="quote">"Tu curso literalmente me salvó la vida en Dominical. Un set de 8 pies me cayó encima — cuatro olas seguidas — y lo que me mantuvo calmo y me sacó a salvo fue tu entrenamiento."</div>
+      <div class="meta">
+        <span class="who">Sergio</span><span class="sep">·</span>
+        <span class="role">Surfista Intermedio</span>
+        <span class="result">Set de 8 pies · salió calmo y a salvo</span>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="quote">"Como surf coach, siempre supe que la respiración era importante — pero este curso me dio herramientas que transformaron cómo entreno a mis alumnos. Ahora surfean con más control, confianza y menos miedo."</div>
+      <div class="meta">
+        <span class="who">Fer Pietro</span><span class="sep">·</span>
+        <span class="role">Surf Coach</span>
+        <span class="result">Adoptó el método con sus alumnos</span>
+      </div>
+    </div>
+
+    <div class="coachnote">
+      <div class="cn-t">UNA NOTA HONESTA</div>
+      <p>El sistema de 8 tests es la evolución más reciente del método. Resultados como el de Vicente se construyeron con los principios Underwave de respiración, apnea y control mental — y hoy el Performance Evaluation Protocol™ hace ese mismo trabajo más preciso y más medible que nunca.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <div class="cta">
+    <h2>Así es entrenar <span class="y">conmigo.</span></h2>
+    <p>Ahora ya sabés cómo funciona, paso a paso. La pregunta es de qué lado lo querés vivir.</p>
+    <div class="dual">
+      <div class="d">
+        <div class="dt">QUIERO ENTRENARLO</div>
+        <p>Querés transformar tu respiración, tu calma y tu experiencia en el agua.</p>
+        <a class="ctabtn" href="https://ig.me/m/underwave.training" target="_blank" rel="noopener">Escribime y empezamos →</a>
+      </div>
+      <div class="d">
+        <div class="dt">QUIERO ENSEÑARLO</div>
+        <p>Sos instructor o coach y querés llevar este método a tus propios alumnos.</p>
+        <a class="ctabtn" href="https://ig.me/m/underwave.training" target="_blank" rel="noopener">Hablemos de la certificación →</a>
+      </div>
+    </div>
+    <div class="small" style="margin-top:30px;">UNDERWAVE TRAINING® · Respiración, apnea y control mental para el agua · Santa Teresa, Costa Rica</div>
+  </div>
+
+  <div class="footer">underwavetraining.com · @underwave.training</div>
+
+</div>
+</body>
+</html>
